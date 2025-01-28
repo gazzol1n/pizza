@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'LOGIN/index.css' %}?=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIZZA</title>
+</head>
+<body>
+    <div class="LOGO">
+        <h1>Вход</h1>
+        <img src="{% static 'IMG/ICONS/LOGO.png' %}">       
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}  <!-- Отображаем форму -->
+        <button type="submit">Войти</button>
+    </form>
+    
+    <!-- Сообщения об ошибках -->
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <p>Нет аккаунта? <a href="/reg/"><b>Зарегистрироваться</b></a></p>
+</body>
+</html>

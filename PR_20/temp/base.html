@@ -1,0 +1,38 @@
+{% load static %}  <!-- Загрузка статических файлов, если необходимо -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мир книг</title>
+    <!-- Ваши CSS файлы -->
+</head>
+<body>
+    <header>
+        <h1>Добро пожаловать в Мир книг</h1>
+    </header>
+
+    <!-- Блок боковой панели -->
+    {% block sidebar %}
+    <nav class="nav flex-column">
+        <a class="nav-link" href="{% url 'books-list' %}">Все книги</a>
+        <a class="nav-link" href="{% url 'authors-list' %}">Все авторы</a>
+        {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">Выход</a>
+            <div>Вошел: {{ user.get_username }}</div>
+            <a class="nav-link" href="{% url 'my-borrowed' %}">Мои заказы</a>
+        {% else %}
+            <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Вход</a>
+        {% endif %}
+    </nav>
+    {% endblock sidebar %}
+
+    <!-- Основной контент страницы -->
+    {% block content %}
+    <!-- Ваш контент здесь -->
+    {% endblock content %}
+
+    <!-- Подключение JS файлов, если необходимо -->
+</body>
+</html>

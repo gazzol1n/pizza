@@ -1,0 +1,8 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>{{ object.name }}</h1>
+<p>{{ object.description }}</p>
+<p>Категория: {{ object.category }}</p>
+<p>Цена: {{ object.price }} руб.</p>
+<a href="{% url 'categories' %}">Назад к меню</a>
+{% endblock %}

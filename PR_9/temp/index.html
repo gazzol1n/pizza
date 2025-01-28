@@ -1,0 +1,7 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Добро пожаловать в пиццерию!</h1>
+<p>Категорий блюд: {{ num_categories }}</p>
+<p>Всего блюд: {{ num_dishes }}</p>
+<a href="{% url 'categories' %}">Посмотреть меню</a>
+{% endblock %}

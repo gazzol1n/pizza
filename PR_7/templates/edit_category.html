@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Редактировать категорию</title>
+</head>
+<body>
+    <h1>Редактировать категорию</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Название категории:</label><br>
+        <input type="text" name="name" value="{{ category.name }}"><br>
+        <input type="submit" value="Сохранить">
+    </form>
+    <a href="{% url 'index' %}">Назад</a>
+</body>
+</html>

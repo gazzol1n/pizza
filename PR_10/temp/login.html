@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<div style="max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-top: 50px;">
+    <h2 style="text-align: center;">Вход в аккаунт</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom: 15px;">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" name="username" id="username" class="form-control" style="width: 100%;" required>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" id="password" class="form-control" style="width: 100%;" required>
+        </div>
+        <div style="text-align: center;">
+            <button type="submit" class="btn" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                Войти
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

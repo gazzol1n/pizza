@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Блюда</h1>
+<a href="{% url 'dish-create' %}" style="padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Добавить блюдо</a>
+<ul>
+    {% for dish in object_list %}
+        <li>
+            {{ dish.name }} - {{ dish.price }} руб.
+            <a href="{% url 'dish-update' dish.pk %}" style="color: #007bff; margin-left: 10px;">Редактировать</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

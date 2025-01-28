@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пиццерия</title>
+</head>
+<body>
+    <header>
+        <h1>Пиццерия</h1>
+    </header>
+    <nav>
+        <a href="{% url 'index' %}">Главная</a> |
+        <a href="{% url 'categories' %}">Меню</a>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; Пиццерия, 2024</p>
+    </footer>
+</body>
+</html>

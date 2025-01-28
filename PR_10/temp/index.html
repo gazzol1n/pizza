@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<div style="text-align: center; margin-top: 50px;">
+    <h1>Добро пожаловать в пиццерию!</h1>
+    
+    <div style="margin: 20px 0;">
+        <p style="font-size: 1.2em;">У нас в меню:</p>
+        <p>Категорий блюд: <strong>{{ num_categories }}</strong></p>
+        <p>Всего блюд: <strong>{{ num_dishes }}</strong></p>
+    </div>
+
+    <div style="margin: 30px 0;">
+        <a href="{% url 'categories' %}" class="btn" style="padding: 10px 20px; background-color: #ff6347; color: white; text-decoration: none; border-radius: 5px; font-size: 1.1em;">
+            Посмотреть меню
+        </a>
+    </div>
+
+    <div style="margin: 20px 0;">
+        {% if user.is_authenticated %}
+            <p>Здравствуйте, {{ user.username }}!</p>
+            <a href="{% url 'my-orders' %}" class="btn" style="padding: 10px 20px; background-color: #4caf50; color: white; text-decoration: none; border-radius: 5px; font-size: 1.1em;">
+                Мои заказы
+            </a>
+            <a href="{% url 'order-create' %}" class="btn" style="padding: 10px 20px; background-color: #ff6347; color: white; text-decoration: none; border-radius: 5px; font-size: 1.1em; margin-left: 10px;">
+                Оформить заказ
+            </a>
+            <a href="{% url 'logout' %}" class="btn" style="padding: 10px 20px; background-color: #d9534f; color: white; text-decoration: none; border-radius: 5px; font-size: 1.1em; margin-left: 10px;">
+                Выйти
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-size: 1.1em;">
+                Войти
+            </a>
+        {% endif %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <div style="margin: 20px 0;">
+        <h3>Управление меню</h3>
+        <a href="{% url 'category-create' %}" class="btn" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-size: 1.1em;">
+            Добавить категорию
+        </a>
+        <a href="{% url 'dish-create' %}" class="btn" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-size: 1.1em; margin-left: 10px;">
+            Добавить блюдо
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

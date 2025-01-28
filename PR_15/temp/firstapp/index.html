@@ -1,0 +1,15 @@
+{% extends "firstapp/base.html" %}
+{% block title %}Главная{% endblock title %}
+{% block header %}Добро пожаловать!{% endblock header %}
+{% block content %}
+<div class="container-fluid text-start my-2 border border-3">
+    <h1>Добро пожаловать на наш сайт!</h1>
+    <p>{{ my_text }}</p>
+    <p>Перейдите по ссылкам, чтобы узнать больше:</p>
+    <ul>
+        <li><a href="{% url 'about' %}">О нас</a></li>
+        <li><a href="{% url 'contact' %}">Контакты</a></li>
+        <li><a href="{% url 'my_form' %}">Форма ввода</a></li>
+    </ul>
+</div>
+{% endblock content %}

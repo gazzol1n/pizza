@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Категории блюд</h1>
+<a href="{% url 'category-create' %}" style="padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Добавить категорию</a>
+<ul>
+    {% for category in object_list %}
+        <li>
+            {{ category.name }}
+            <a href="{% url 'category-update' category.pk %}" style="color: #007bff; margin-left: 10px;">Редактировать</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

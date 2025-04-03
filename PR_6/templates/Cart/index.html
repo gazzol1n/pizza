@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'Cart/index.css' %}" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="NAV">
+        <img src="{% static 'Cart/RES/LOGO.svg' %}">
+        <h1>Корзина</h1>
+        <a class="button">Выйти</a>
+    </div>
+    <div class="Food-List">
+        <div class="Food-Item">
+            <img src="{% static 'Cart/RES/image.png' %}">
+            <h2>Пицца Маргарита</h2>
+            <h2>450р</h2>
+            <div class="COUNTER">
+                <button data-action="decrement" class="button">
+                    <svg viewBox="0 0 448 512" width="100%" aria-label="minus icon" role="img" title="minus">
+                        <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                    </svg>
+                </button>
+                <input type="number" name="custom-input-number" id="custom-input-number" min="0" value="1" />
+                <button data-action="increment" class="button">
+                    <svg viewBox="0 0 448 512" width="100%" aria-label="plus icon" role="img" title="plus">
+                        <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="Food-Item">
+            <img src="{% static 'Cart/RES/filadlait1-1.jpg' %}">
+            <h2>Ролл Филадельфия</h2>
+            <h2>800р</h2>
+            <div class="COUNTER">
+                <button data-action="decrement" class="button">
+                    <svg viewBox="0 0 448 512" width="100%" aria-label="minus icon" role="img" title="minus">
+                        <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                    </svg>
+                </button>
+                <input type="number" name="custom-input-number" id="custom-input-number" min="0" value="1" />
+                <button data-action="increment" class="button">
+                    <svg viewBox="0 0 448 512" width="100%" aria-label="plus icon" role="img" title="plus">
+                        <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const decrementButton = document.querySelectorAll(`[data-action="decrement"]`);
+
+const incrementButton = document.querySelectorAll(`[data-action="increment"]`);
+
+decrementButton.forEach((button) => {
+	function decrement(e) {
+		const button = e.target.parentNode.parentElement.querySelector(
+			'[data-action="decrement"]'
+		);
+		const target = button.nextElementSibling;
+		let value = Number(target.value);
+		value--;
+		target.value = value;
+		if (target.value < 0) {
+			target.value = "0";
+		}
+	}
+	button.addEventListener("click", decrement);
+});
+
+incrementButton.forEach((button) => {
+	function increment(e) {
+		const button = e.target.parentNode.parentElement.querySelector(
+			'[data-action="decrement"]'
+		);
+		const target = button.nextElementSibling;
+		let value = Number(target.value);
+		value++;
+		target.value = value;
+	}
+	button.addEventListener("click", increment);
+});
+
+</script>
+</html>

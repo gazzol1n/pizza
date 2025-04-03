@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Успешная отправка формы</title>
+</head>
+<body>
+    <h1>Данные формы успешно отправлены!</h1>
+    <ul>
+        {% for key, value in form_data.items %}
+            <li><strong>{{ key }}:</strong> {{ value }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

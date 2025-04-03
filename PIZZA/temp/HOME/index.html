@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'HOME/index.css' %}?=6">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIZZA</title>
+</head>
+<body>
+    <div class="NAV">
+        <button><img src="{% static 'IMG/ICONS/LOGO.png' %}"></button>
+        <div class="SEARCH"><input type="text" placeholder="Поиск пиццы"><button class="CLEAR_BTN">×</button></div>
+        {% if user.is_authenticated %}
+            <button onclick="show_dialog()"><img src="{% static 'IMG/ICONS/CATCH.png' %}"></button>
+        {% else %}
+            <button onclick="redirect()"><img src="{% static 'IMG/ICONS/PROFILE.png' %}"></button>
+        {% endif %}
+        
+    </div>
+    <div class="MENU-TAB">
+        {% for category in categories %}
+            <a href="#{{ category.name }}"><div class="TAB" id="ACTIVE-TAB" onclick="">{{ category.name }}</div></a>
+        {% endfor %}
+    </div>
+    <div class="MENU">
+        {% for category in categories %}
+        <h1 id="{{ category.name }}">{{ category.name }}</h1>
+        <div class="CARDS" id="CARDS_ID_{{ forloop.counter }}">
+            {% for dish in category.dish_set.all %}
+                <div class="CARD">
+                    <img src="{{ dish.image.url }}">
+                    <div class="INFO">
+                        <h3>{{ dish.name }}</h3>
+                        <p>{{ dish.dis }}</p>
+                        <div class="PRICE">
+                            <h2>{{ dish.price }} ₽</h2>
+                            {% if user.is_authenticated %}
+                                <button onclick="addToCart({{ dish.id }})">+</button>
+                            {% else %}
+                                <button onclick="redirect()"><img src="{% static 'IMG/ICONS/PROFILE.png' %}"></button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
+    <dialog class="CART" id="OPEN">
+        <div class="TITLE">
+            <h1>Корзина</h1>
+            <button onclick="show_dialog()" class="CLEAR_BTN">x</button>
+        </div>
+        <div class="DISH" id="cart-items">
+            <!-- Здесь динамически будет рендериться содержимое корзины -->
+        </div>
+        <button class="BUY" id="buy-button">
+            Заказать 0 ₽
+        </button>
+    </dialog>
+    
+    <script>
+        // Загрузка содержимого корзины
+        function loadCart() {
+            fetch('/api/cart/')  // Эндпоинт для получения корзины
+                .then(response => response.json())
+                .then(data => {
+                    const cartItems = document.getElementById('cart-items');
+                    cartItems.innerHTML = ''; // Очищаем содержимое
+                    let total = 0;
+    
+                    data.items.forEach(item => {
+                        total += item.quantity * item.dish.price;
+                        cartItems.innerHTML += `
+                            <div class="FOOD">
+                                <img src="${item.dish.image_url}">
+                                <div class="INFO">
+                                    <h3>${item.dish.name}</h3>
+                                    <h2>${item.dish.price} ₽</h2>
+                                </div>
+                                <div class="COUNT">
+                                    <button onclick="updateCart(${item.id}, -1)">-</button>
+                                    <h3>${item.quantity}</h3>
+                                    <button onclick="updateCart(${item.id}, 1)">+</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+    
+                    document.getElementById('buy-button').innerText = `Заказать ${total} ₽`;
+                });
+        }
+    
+        // Обновление количества блюд
+        function updateCart(itemId, delta) {
+            fetch(`/api/cart/update/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify({ delta }),
+            })
+            .then(response => response.json())
+            .then(() => loadCart()); // Перезагрузка корзины
+        }
+
+        function addToCart(dishId) {
+        fetch('/api/cart/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ dish_id: dishId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            loadCart();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    
+        // Загрузка корзины при открытии
+        loadCart();
+    </script>
+</body>
+<script>
+   
+
+</script>
+{% if user.is_authenticated %}
+<script>
+    function show_dialog() {
+    try {
+        // Используем правильный метод getElementById
+        let dialog = document.getElementById("OPEN");
+        dialog.id = "CLOSE"; // Меняем ID на "CLOSE"
+        dialog.close(); // Закрываем диалог
+    } catch (error) {
+        // Если элемент с ID "OPEN" не найден, обрабатываем "CLOSE"
+        let dialog = document.getElementById("CLOSE");
+        dialog.id = "OPEN"; // Меняем ID на "OPEN"
+        dialog.showModal(); // Открываем диалог
+    }
+}
+
+    </script>
+{% else %}
+    <script>
+        function redirect() {
+            window.location.href = "/login/";  // Перенаправляем на страницу login
+        }
+
+    </script>
+{% endif %}
+</html>

@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'Login/index.css' %}?=2" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="Title">
+        <img src="{% static 'Login/RES/LOGO.svg' %}">
+        <h1>My Pizza</h1>
+    </div>
+    <div class="Right">
+        <form>
+            <h1>Автоизация</h1>
+            <input placeholder="Логин" type="text">
+            <input placeholder="Пароль" type="password">
+            <a id="mybutton" class="button" type="submit" href="/cart/">Войти</a>
+            <p>Нет аккаунта? <a>Зарегистрируйся</a></p>
+        </form>
+    </div>
+</body>
+</html>

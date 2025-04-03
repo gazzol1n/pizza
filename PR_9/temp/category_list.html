@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Меню</h1>
+<ul>
+    {% for category in object_list %}
+    <li>{{ category.name }}</li>
+    <ul>
+        {% for dish in category.dish_set.all %}
+        <li><a href="{% url 'dish-detail' dish.id %}">{{ dish.name }}</a> - {{ dish.price }} руб.</li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</ul>
+{% endblock %}

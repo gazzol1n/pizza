@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Пиццерия - Управление данными</title>
+</head>
+<body>
+    <h1>Управление данными пиццерии</h1>
+
+    <!-- Форма для добавления человека -->
+    <h2>Добавить человека</h2>
+    <form method="POST" action="{% url 'create_person' %}">
+        {% csrf_token %}
+        <label>Имя:</label><br>
+        <input type="text" name="name"><br>
+        <label>Возраст:</label><br>
+        <input type="number" name="age"><br>
+        <input type="submit" value="Сохранить">
+    </form>
+
+    <!-- Форма для добавления категории -->
+    <h2>Добавить категорию</h2>
+    <form method="POST" action="{% url 'create_category' %}">
+        {% csrf_token %}
+        <label>Название категории:</label><br>
+        <input type="text" name="name"><br>
+        <input type="submit" value="Сохранить">
+    </form>
+
+    <!-- Форма для добавления блюда -->
+    <h2>Добавить блюдо</h2>
+    <form method="POST" action="{% url 'create_dish' %}">
+        {% csrf_token %}
+        <label>Название блюда:</label><br>
+        <input type="text" name="name"><br>
+        <label>Категория:</label><br>
+        <select name="category_id">
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select><br>
+        <label>Описание:</label><br>
+        <textarea name="description"></textarea><br>
+        <label>Цена:</label><br>
+        <input type="number" step="0.01" name="price"><br>
+        <input type="submit" value="Сохранить">
+    </form>
+
+    <!-- Список людей -->
+    <h2>Список людей</h2>
+    <ul>
+        {% for person in people %}
+            <li>{{ person.name }} — {{ person.age }} лет
+                <a href="{% url 'edit_person' person.id %}">Редактировать</a> |
+                <a href="{% url 'delete_person' person.id %}">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Категории и их блюда</h2>
+    <ul>
+        {% for category in categories %}
+            <li><strong>{{ category.name }}</strong>
+                <a href="{% url 'edit_category' category.id %}">Изменить</a> |
+                <a href="{% url 'delete_category' category.id %}">Удалить</a>
+                <ul>
+                    {% for dish in category.dish_set.all %}
+                        <li>{{ dish.name }} - {{ dish.price }} руб.
+                            <a href="{% url 'edit_dish' dish.id %}">Изменить</a> |
+                            <a href="{% url 'delete_dish' dish.id %}">Удалить</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+    
+
+
+</body>
+</html>

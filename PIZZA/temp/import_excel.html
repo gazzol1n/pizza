@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'LOGIN/index.css' %}?=1">
+    <title>Импорт данных из Excel</title>
+</head>
+<body>
+    {% if user.is_superuser %}
+        <h2>Импорт данных из Excel</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Импортировать</button>
+        </form>
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% else %}
+        <p>404 ошибка доступа</p>
+    {% endif %}
+</body>
+</html>

@@ -70,7 +70,7 @@ li, span{
 }
 
 
-form input{
+form input, form select{
     width: 100%;
     height: auto;
     background-color: var(--search-color);
@@ -84,7 +84,7 @@ form input{
     
 }
 
-form input, form label{
+form input, form label, form select{
     display: inline-block;
     text-align: start;
     width: 100%;

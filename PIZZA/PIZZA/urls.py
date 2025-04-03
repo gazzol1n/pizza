@@ -18,6 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from PIZZA_APP import views
 from PIZZA_APP.views import login_view, register_view
+from rest_framework.routers import DefaultRouter
+from PIZZA_APP.views import CategoryViewSet, DishViewSet, CartViewSet, CartItemViewSet, UserViewSet
+
+router = DefaultRouter()
+router.register(r'categories', CategoryViewSet)
+router.register(r'dishes', DishViewSet)
+router.register(r'carts', CartViewSet)
+router.register(r'cart-items', CartItemViewSet)
+router.register(r'users', UserViewSet)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +40,6 @@ urlpatterns = [
     path('api/cart/', views.cart_view, name='cart_view'),
     path('api/cart/update/<int:item_id>/', views.update_cart, name='update_cart'),
     path('api/cart/add/', views.add_to_cart, name='add_to_cart'),
+    path('api/', include(router.urls)),
+    path('import/', views.import_excel, name='import_excel'),
 ]
